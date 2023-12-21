@@ -28,9 +28,9 @@ jobs:
     
     - name: Deploy to AWS Elastic Beanstalk
       run: |
-        eb init --non-interactive
-        eb create --non-interactive
-        eb deploy --non-interactive
+        eb init 
+        eb create 
+        eb deploy 
       env:
         AWS_ACCESS_KEY_ID: ${{ secrets.AWS_ACCESS_KEY_ID }}
         AWS_SECRET_ACCESS_KEY: ${{ secrets.AWS_SECRET_ACCESS_KEY }}
