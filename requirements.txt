@@ -1,3 +1,6 @@
 fastapi
 strawberry-graphql[debug-server]
 uvicorn
+sqlalchemy
+psycopg2-binary
+alembic
