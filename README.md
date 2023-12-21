@@ -6,8 +6,8 @@ pip install "strawberry-graphql[debug-server]"
 ## Run
 uvicorn app.main:app --reload #then navigate to [http://127.0.0.1:8000/graphql ](http://127.0.0.1:8000/graphql)
 
-alembic init alembic
 alembic revision --autogenerate -m "Description of changes"
+
 alembic upgrade head
 
 
@@ -19,6 +19,7 @@ https://github.com/strawberry-graphql/strawberry
 https://strawberry.rocks
 
 ## Test
+```python
 Post:
 mutation PostCountryInfo($input: CountryInput!) {
   postCountryInfo(countryInput: $input) {
