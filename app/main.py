@@ -6,7 +6,7 @@ from typing import List, Optional
 from sqlalchemy.orm import Session
 
 from .models import Country as CountryModel
-from .schemas import Country, CountryInput
+from .schemas import Country, CountryInput, CountryPaginationResult
 from .dependencies import get_db
 from .crud import get_country_info, delete_country, update_country
 from .database import SessionLocal
@@ -66,15 +66,15 @@ class Query:
                 return None
             return Country(name=country_model.name, region=country_model.region, language=country_model.language, culturetip=country_model.culturetip, localcustom=country_model.localcustom)
 
-    # @strawberry.field
-    # def get_culture_tips(self, country_name: str) -> List[CultureTip]:
-    #     # Fetch culture tips for a specific country
-    #     pass
-
-    # @strawberry.field
-    # def get_local_customs(self, country_name: str) -> List[LocalCustom]:
-    #     # Fetch local customs for a specific country
-    #     pass
+    @strawberry.field
+    def list_countries(self, skip: int = 0, limit: int = 10) -> CountryPaginationResult:
+        with SessionLocal() as db:
+            total_count = db.query(CountryModel).count()
+            countries = db.query(CountryModel).offset(skip).limit(limit).all()
+            countries_list = [Country(name=country.name, region=country.region, language=country.language, culturetip=country.culturetip, localcustom=country.localcustom) for country in countries]
+            retrieved_count = len(countries_list) + skip
+            remaining_count = total_count - retrieved_count
+            return CountryPaginationResult(countries=countries_list, retrieved_count=retrieved_count, remaining_count=remaining_count)
 
 schema = strawberry.Schema(query=Query, mutation=Mutation)
 graphql_app = GraphQLRouter(schema)

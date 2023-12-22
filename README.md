@@ -47,6 +47,18 @@ Get:
   }
 }
 
+Get (pagination):
+{
+  listCountries(skip: a, limit: b) {
+    countries {
+      name
+      region
+    }
+    retrievedCount
+    remainingCount
+  }
+}
+
 Delete:
 mutation {
   deleteCountry(name: "CountryName") 

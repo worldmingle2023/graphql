@@ -1,5 +1,6 @@
 from pydantic import BaseModel
 import strawberry
+from typing import List
 
 class CountryBase(BaseModel):
     name: str
@@ -23,6 +24,12 @@ class Country:
     language: str
     culturetip: str
     localcustom: str
+
+@strawberry.type
+class CountryPaginationResult:
+    countries: List[Country]
+    retrieved_count: int
+    remaining_count: int
 
 @strawberry.input
 class CountryInput:
